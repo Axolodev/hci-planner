@@ -1,5 +1,6 @@
 import { Section } from "@/types";
 import SectionOption from "./SectionOption";
+import { Fragment } from "react";
 
 interface Props {
   section: Section;
@@ -12,8 +13,13 @@ export default function Module({ section }: Props) {
       <p>{section.description}</p>
       {section.options && (
         <div className="flex w-full gap-2 mt-2 flex-col md:flex-row">
-          {section.options.map((option) => (
-            <SectionOption key={option.name} option={option} />
+          {section.options.map((option, index) => (
+            <Fragment key={option.name}>
+              {index > 0 && (
+                <div className="divider md:divider-horizontal">OR</div>
+              )}
+              <SectionOption option={option} />
+            </Fragment>
           ))}
         </div>
       )}
