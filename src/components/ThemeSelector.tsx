@@ -25,8 +25,8 @@ const daisyUiThemes = [
 
 export default function ThemeSelector() {
   return (
-    <div className="dropdown mb-72 absolute">
-      <div tabIndex={0} role="button" className="btn m-1">
+    <div className="dropdown mb-72">
+      <div tabIndex={0} role="button" className="btn">
         Choose a Theme
         <svg
           width="12px"
