@@ -86,9 +86,15 @@ const plan: Plan = {
       ],
     },
     {
-      title: "Master Thesis",
+      title: "Master's Thesis",
       description:
-        "You need to do a master thesis to graduate. You can start this when you have completed all three projects.",
+        "You need to do a master's thesis to graduate. You can start this when you have completed all three projects.",
+      options: [
+        {
+          name: "Master's Thesis",
+          modules: [{ name: "Master's Thesis" }],
+        },
+      ],
     },
   ],
 };
