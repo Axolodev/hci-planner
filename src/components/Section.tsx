@@ -9,8 +9,8 @@ interface Props {
 export default function Module({ section }: Props) {
   return (
     <div key={section.title} className="p-4 bg-base-200 rounded-lg">
-      <h2 className="text-xl font-bold">{section.title}</h2>
-      <p>{section.description}</p>
+      <h2 className="text-xl font-bold pb-1">{section.title}</h2>
+      <p className="pb-1">{section.description}</p>
       {section.options && (
         <div className="flex w-full gap-2 mt-2 flex-col md:flex-row">
           {section.options.map((option, index) => (

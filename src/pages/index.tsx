@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <MainLayout>
-      <div className="grid gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {plan.sections.map((section) => (
           <Module key={section.title} section={section} />
         ))}
