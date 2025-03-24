@@ -14,6 +14,5 @@ export type Section = {
 };
 
 export type Plan = {
-  title: string;
   sections: Section[];
 };

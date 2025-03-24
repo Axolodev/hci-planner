@@ -1,7 +1,6 @@
 import { Plan } from "@/types";
 
 const plan: Plan = {
-  title: "HCI Masters Planner",
   sections: [
     {
       title: "Basics of Human-Computer Interaction",
