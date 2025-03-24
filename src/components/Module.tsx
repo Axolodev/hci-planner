@@ -39,7 +39,7 @@ const Module: React.FunctionComponent<Props> = ({
         onChange={handleChange}
         checked={isCompleted}
         disabled={disabled}
-        className={`form-checkbox min-h-4 min-w-4 disabled:cursor-not-allowed text-base-content`}
+        className={`checkbox disabled:cursor-not-allowed text-base-content`}
       />
       <label
         htmlFor={optionName + name}

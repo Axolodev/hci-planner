@@ -22,8 +22,6 @@ type CoursesStateType = {
 };
 
 export type CoursesActionsType = {
-  // Save the current state to local storage
-  saveInLocalStorage: (state: CoursesStateType) => void;
   // Reset all courses status
   reset: () => void;
   // Sets the current status for a module
@@ -46,6 +44,7 @@ export type CoursesActionsType = {
     sectionName: string,
     optionIndex: number
   ) => boolean;
+  // Gets whether a
 };
 
 export type CoursesStoreType = CoursesStateType & CoursesActionsType;
@@ -68,6 +67,10 @@ export const convertPlanToStatus = (plan: Plan) => {
     sections[section.title] = { options };
   });
   return sections;
+};
+
+const saveInLocalStorage = (state: CoursesStateType) => {
+  localStorage.setItem(localStorageKey, JSON.stringify(state));
 };
 
 export const initCounterStore = (): CoursesStateType => {
@@ -97,29 +100,30 @@ export const createCoursesStore = (
 ) => {
   return createStore<CoursesStoreType>((set, get) => ({
     ...initState,
-    saveInLocalStorage: () => {
-      localStorage.setItem(localStorageKey, JSON.stringify(get()));
-    },
     reset: () => {
       set(initState);
-      get().saveInLocalStorage(initState);
+      saveInLocalStorage(initState);
     },
     setModuleStatus: (sectionName, optionIndex, moduleIndex, status) => {
-      set((state) => ({
-        ...state,
-        sections: modifyPath(
-          [
-            sectionName,
-            "options",
-            optionIndex,
-            "modules",
-            moduleIndex,
-            "isCompleted",
-          ],
-          () => status,
-          state.sections
-        ),
-      }));
+      set((state) => {
+        const newState = {
+          ...state,
+          sections: modifyPath(
+            [
+              sectionName,
+              "options",
+              optionIndex,
+              "modules",
+              moduleIndex,
+              "isCompleted",
+            ],
+            () => status,
+            state.sections
+          ),
+        };
+        saveInLocalStorage(newState);
+        return newState;
+      });
     },
     getModuleStatus: (sectionName, optionIndex, moduleIndex) => {
       return (
