@@ -1,12 +1,12 @@
-import { Section } from "@/types";
+import { Section as SectionType } from "@/types";
 import SectionOption from "./SectionOption";
 import { Fragment } from "react";
 
 interface Props {
-  section: Section;
+  section: SectionType;
 }
 
-export default function Module({ section }: Props) {
+export default function Section({ section }: Props) {
   return (
     <div key={section.title} className="p-4 bg-base-200 rounded-lg">
       <h2 className="text-xl font-bold pb-1">{section.title}</h2>
@@ -18,7 +18,11 @@ export default function Module({ section }: Props) {
               {index > 0 && (
                 <div className="divider md:divider-horizontal">OR</div>
               )}
-              <SectionOption option={option} />
+              <SectionOption
+                option={option}
+                sectionTitle={section.title}
+                optionIndex={index}
+              />
             </Fragment>
           ))}
         </div>

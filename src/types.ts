@@ -10,7 +10,7 @@ export type SectionOption = {
 export type Section = {
   title: string;
   description: string;
-  options?: SectionOption[];
+  options: SectionOption[];
 };
 
 export type Plan = {
