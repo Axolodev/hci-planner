@@ -22,6 +22,9 @@ export const defaultInitState: CoursesStateType = {
 };
 
 export const initCounterStore = (): CoursesStateType => {
+  if (typeof window === "undefined") {
+    return defaultInitState;
+  }
   const courses = localStorage.getItem(localStorageKey);
   if (courses) {
     return JSON.parse(courses);

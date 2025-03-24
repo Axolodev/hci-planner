@@ -6,7 +6,7 @@ import { CoursesStoreProvider } from "@/providers/CoursesStoreProvider";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <CoursesStoreProvider>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </CoursesStoreProvider>
   );
 }
