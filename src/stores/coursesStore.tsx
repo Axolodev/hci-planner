@@ -44,7 +44,10 @@ export type CoursesActionsType = {
     sectionName: string,
     optionIndex: number
   ) => boolean;
-  // Gets whether a
+  // Gets whether a section has been completed
+  isSectionCompleted: (sectionName: string) => boolean;
+  // Gets whether the plan has been completed
+  isPlanCompleted: () => boolean;
 };
 
 export type CoursesStoreType = CoursesStateType & CoursesActionsType;
@@ -69,18 +72,7 @@ export const convertPlanToStatus = (plan: Plan) => {
   return sections;
 };
 
-const saveInLocalStorage = (state: CoursesStateType) => {
-  localStorage.setItem(localStorageKey, JSON.stringify(state));
-};
-
 export const initCounterStore = (): CoursesStateType => {
-  if (typeof window === "undefined") {
-    return defaultInitState;
-  }
-  const courses = localStorage.getItem(localStorageKey);
-  if (courses) {
-    return JSON.parse(courses);
-  }
   return {
     ...defaultInitState,
     sections: convertPlanToStatus(plan),
@@ -95,6 +87,14 @@ function isSectionStarted(section: SectionType) {
   return section.options.some(isSectionOptionStarted);
 }
 
+function isSectionOptionCompleted(sectionOption: SectionOption) {
+  return sectionOption.modules.every((module) => module.isCompleted);
+}
+
+function isPlanCompleted(sections: Record<string, SectionType>) {
+  return Object.values(sections).every((section) => isSectionStarted(section));
+}
+
 export const createCoursesStore = (
   initState: CoursesStateType = defaultInitState
 ) => {
@@ -102,7 +102,6 @@ export const createCoursesStore = (
     ...initState,
     reset: () => {
       set(initState);
-      saveInLocalStorage(initState);
     },
     setModuleStatus: (sectionName, optionIndex, moduleIndex, status) => {
       set((state) => {
@@ -121,7 +120,6 @@ export const createCoursesStore = (
             state.sections
           ),
         };
-        saveInLocalStorage(newState);
         return newState;
       });
     },
@@ -158,6 +156,16 @@ export const createCoursesStore = (
         }
         return isSectionOptionStarted(option);
       });
+    },
+    isSectionCompleted(sectionName) {
+      const currentSection = get().sections[sectionName];
+      if (!currentSection) {
+        return false;
+      }
+      return currentSection.options.some(isSectionOptionCompleted);
+    },
+    isPlanCompleted: () => {
+      return isPlanCompleted(get().sections);
     },
   }));
 };
