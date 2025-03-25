@@ -19,6 +19,8 @@ export default function Footer() {
           <a
             href="https://github.com/Axolodev"
             className="font-bold link-primary"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             Roberto Ruiz
           </a>
