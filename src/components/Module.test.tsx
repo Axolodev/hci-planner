@@ -6,7 +6,7 @@ import Module, { TESTING_ID } from "./Module";
 import { basicPlan } from "../testUtils/plans";
 
 describe("Module", () => {
-  it.skip("renders correctly and matches snapshot", () => {
+  it("renders correctly and matches snapshot", () => {
     const { container } = render(
       <CoursesStoreProvider plan={basicPlan}>
         <Module

@@ -9,7 +9,7 @@ import SectionOption, {
 import userEvent from "@testing-library/user-event";
 
 describe("SectionOption", () => {
-  it.skip("renders correctly and matches snapshot", () => {
+  it("renders correctly and matches snapshot", () => {
     const { container } = render(
       <CoursesStoreProvider plan={basicPlan}>
         <SectionOption

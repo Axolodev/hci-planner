@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "test": "jest",
+    "test": "jest --testNamePattern='^((?!snapshot).)*$' --coverage",
+    "test:full": "jest",
     "lint": "next lint"
   },
   "dependencies": {
