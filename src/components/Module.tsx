@@ -32,26 +32,16 @@ const Module: React.FunctionComponent<Props> = ({
   };
 
   return (
-    <div key={name} className="flex items-center gap-2">
-      <input
-        type="checkbox"
-        id={optionName + name}
-        onChange={handleChange}
-        checked={isCompleted}
-        disabled={disabled}
-        className={`checkbox disabled:cursor-not-allowed text-base-content`}
-      />
-      <label
-        htmlFor={optionName + name}
-        className={`transition-colors ${
-          disabled
-            ? "text-base-content/50 cursor-not-allowed"
-            : "text-base-content select-none"
-        }`}
-      >
-        {name}
-      </label>
-    </div>
+    <input
+      type="checkbox"
+      onChange={handleChange}
+      checked={isCompleted}
+      disabled={disabled}
+      id={`${optionName}-${name}`}
+      className={`btn join-item disabled:cursor-not-allowed rounded-field`}
+      aria-label={name}
+      style={{ margin: 0 }}
+    />
   );
 };
 

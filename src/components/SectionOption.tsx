@@ -21,7 +21,7 @@ export default function SectionOption({
 
   return (
     <div
-      className={`p-4 flex-1 rounded-lg flex flex-col gap-2 justify-center transition-colors ${
+      className={`p-4 flex-1 rounded-box flex flex-col gap-2 justify-center transition-colors join w-full ${
         isNeighborStarted ? "bg-base-300/60 cursor-not-allowed" : "bg-base-300"
       }`}
     >

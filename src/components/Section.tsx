@@ -10,7 +10,7 @@ export default function Section({ section }: Props) {
   return (
     <div
       key={section.title}
-      className="p-4 bg-base-200 rounded-lg flex flex-col"
+      className="p-4 bg-base-200 rounded-box flex flex-col"
     >
       <h2 className="text-xl font-bold pb-1">{section.title}</h2>
       <p className="pb-1">{section.description}</p>
