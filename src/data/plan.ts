@@ -8,6 +8,7 @@ const plan: Plan = {
       options: [
         {
           name: "Basics of HCI",
+          creditsInfo: "9 Credits each",
           modules: [{ name: "HCI & A&E" }, { name: "Psychology & UX Design" }],
         },
       ],
@@ -18,10 +19,12 @@ const plan: Plan = {
       options: [
         {
           name: "CSCW & CSCL",
+          creditsInfo: "9 Credits each",
           modules: [{ name: "CSCW & CSCL" }],
         },
         {
           name: "Ubicomp & Usable Security",
+          creditsInfo: "9 Credits each",
           modules: [{ name: "Ubiquitous Computing & Usable Security" }],
         },
       ],
@@ -32,6 +35,7 @@ const plan: Plan = {
       options: [
         {
           name: "Practice",
+          creditsInfo: "9 Credits each",
           modules: [
             { name: "Project A" },
             { name: "Project B" },
@@ -47,6 +51,7 @@ const plan: Plan = {
       options: [
         {
           name: "Research only",
+          creditsInfo: "3 Credits each",
           modules: [
             { name: "Current Research 1" },
             { name: "Current Research 2" },
@@ -55,6 +60,7 @@ const plan: Plan = {
         },
         {
           name: "Research and Internship",
+          creditsInfo: "3 Credits each",
           modules: [
             { name: "Current Research 1" },
             { name: "Current Research 2" },
@@ -70,6 +76,7 @@ const plan: Plan = {
       options: [
         {
           name: "6 Credits each",
+          creditsInfo: "6 Credits each",
           modules: [
             { name: "Interdisciplinary Context 1" },
             { name: "Interdisciplinary Context 2" },
@@ -78,6 +85,7 @@ const plan: Plan = {
         },
         {
           name: "9 Credits each",
+          creditsInfo: "9 Credits each",
           modules: [
             { name: "Interdisciplinary Context 1" },
             { name: "Interdisciplinary Context 2" },
@@ -91,6 +99,7 @@ const plan: Plan = {
         "You need to do a master's thesis to graduate. You can start this when you have completed all three projects.",
       options: [
         {
+          creditsInfo: "30 Credits",
           name: "Master's Thesis",
           modules: [{ name: "Master's Thesis" }],
         },

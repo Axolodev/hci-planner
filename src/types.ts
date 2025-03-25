@@ -5,6 +5,7 @@ export type Module = {
 export type SectionOption = {
   name: string;
   modules: Module[];
+  creditsInfo?: string;
 };
 
 export type Section = {

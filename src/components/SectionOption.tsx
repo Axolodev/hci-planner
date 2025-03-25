@@ -1,4 +1,5 @@
 import { SectionOption as SectionOptionType } from "@/types";
+import { FaInfoCircle } from "react-icons/fa";
 import Module from "./Module";
 import { useCoursesStore } from "@/providers/CoursesStoreProvider";
 
@@ -25,11 +26,17 @@ export default function SectionOption({
 
   return (
     <div
-      className={`p-4 flex-1 rounded-box flex flex-col items-stretch gap-2 justify-center transition-colors join w-full ${
+      className={`p-4 flex-1 rounded-box flex flex-col items-stretch gap-2 justify-center transition-colors join w-full indicator ${
         isNeighborStarted ? "bg-base-300/60 cursor-not-allowed" : "bg-base-300"
       }`}
       data-testid={`${TESTING_ID_PREFIX}${optionIndex}`}
     >
+      <span
+        className="indicator-item text-info tooltip cursor-help"
+        data-tip={option.creditsInfo}
+      >
+        <FaInfoCircle className="text-lg" />
+      </span>
       {option.modules.map((module, index) => (
         <Module
           key={module.name}
