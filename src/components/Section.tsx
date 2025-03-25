@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import ConfettiExplosion from "react-confetti-blast";
+import { FaCheckCircle } from "react-icons/fa";
 
 import { Section as SectionType } from "@/types";
 import SectionOption from "./SectionOption";
@@ -25,7 +26,9 @@ export default function Section({ section }: Props) {
         }`}
         data-testid={INDICATOR_TESTING_ID}
       >
-        <div className="swap-on">✅</div>
+        <div className="swap-on">
+          <FaCheckCircle className="text-success" />
+        </div>
         <div className="swap-off"></div>
         {isCompleted && (
           <ConfettiExplosion
