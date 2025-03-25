@@ -38,7 +38,7 @@ const Module: React.FunctionComponent<Props> = ({
       checked={isCompleted}
       disabled={disabled}
       id={`${optionName}-${name}`}
-      className={`btn join-item disabled:cursor-not-allowed rounded-field`}
+      className={`btn join-item disabled:cursor-not-allowed w-full rounded-field`}
       aria-label={name}
       style={{ margin: 0 }}
     />
