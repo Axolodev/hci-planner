@@ -1,9 +1,14 @@
+import * as React from "react";
+import Head from "next/head";
+
 import Footer from "@/components/Footer";
 import ThemeSelector from "@/components/ThemeSelector";
-import Head from "next/head";
-import * as React from "react";
 
-const MainLayout = ({ children }: React.PropsWithChildren) => {
+interface Props extends React.PropsWithChildren {
+  isPlanCompleted: boolean;
+}
+
+const MainLayout = ({ children }: Props) => {
   return (
     <div className="min-h-screen flex flex-col justify-between">
       <Head>

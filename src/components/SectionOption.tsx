@@ -13,7 +13,9 @@ export default function SectionOption({
   sectionTitle,
   optionIndex,
 }: Props) {
-  const { isNeighbourSectionOptionStarted } = useCoursesStore((state) => state);
+  const {
+    getIsNeighbourSectionOptionStarted: isNeighbourSectionOptionStarted,
+  } = useCoursesStore((state) => state);
   const isNeighborStarted = isNeighbourSectionOptionStarted(
     sectionTitle,
     optionIndex

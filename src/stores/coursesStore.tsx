@@ -38,16 +38,16 @@ export type CoursesActionsType = {
     moduleIndex: number
   ) => boolean;
   // Gets whether a Section has been started
-  isSectionStarted: (sectionName: string) => boolean;
+  getIsSectionStarted: (sectionName: string) => boolean;
   // Gets whether any neighbour section has been started
-  isNeighbourSectionOptionStarted: (
+  getIsNeighbourSectionOptionStarted: (
     sectionName: string,
     optionIndex: number
   ) => boolean;
   // Gets whether a section has been completed
-  isSectionCompleted: (sectionName: string) => boolean;
+  getIsSectionCompleted: (sectionName: string) => boolean;
   // Gets whether the plan has been completed
-  isPlanCompleted: () => boolean;
+  getIsPlanCompleted: () => boolean;
 };
 
 export type CoursesStoreType = CoursesStateType & CoursesActionsType;
@@ -138,14 +138,14 @@ export const createCoursesStore = (
         ) || false
       );
     },
-    isSectionStarted(sectionName) {
+    getIsSectionStarted(sectionName) {
       const currentSection = get().sections[sectionName];
       if (!currentSection) {
         return false;
       }
       return isSectionStarted(currentSection);
     },
-    isNeighbourSectionOptionStarted(sectionName, optionIndex) {
+    getIsNeighbourSectionOptionStarted(sectionName, optionIndex) {
       const currentSection = get().sections[sectionName];
       if (!currentSection) {
         return false;
@@ -157,14 +157,14 @@ export const createCoursesStore = (
         return isSectionOptionStarted(option);
       });
     },
-    isSectionCompleted(sectionName) {
+    getIsSectionCompleted(sectionName) {
       const currentSection = get().sections[sectionName];
       if (!currentSection) {
         return false;
       }
       return currentSection.options.some(isSectionOptionCompleted);
     },
-    isPlanCompleted: () => {
+    getIsPlanCompleted: () => {
       return isPlanCompleted(get().sections);
     },
   }));
