@@ -30,6 +30,7 @@ export default function Section({ section }: Props) {
             duration={2200}
             particleCount={30}
             width={400}
+            zIndex={2}
           />
         )}
       </label>
