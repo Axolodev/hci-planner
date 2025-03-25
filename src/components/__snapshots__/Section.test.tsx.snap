@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Section renders correctly and matches snapshot 1`] = `
+<div>
+  <div
+    class="p-4 bg-base-200 rounded-box flex flex-col indicator w-full"
+  >
+    <label
+      class="swap text-3xl indicator-item absolute cursor-default "
+      data-testid="section-indicator"
+    >
+      <div
+        class="swap-on"
+      >
+        ✅
+      </div>
+      <div
+        class="swap-off"
+      />
+    </label>
+    <h2
+      class="text-xl font-bold pb-1"
+    >
+      Section title
+    </h2>
+    <p
+      class="pb-1"
+    />
+    <div
+      class="flex w-full gap-2 mt-2 flex-col md:flex-row flex-1"
+    >
+      <div
+        class="p-4 flex-1 rounded-box flex flex-col items-stretch gap-2 justify-center transition-colors join w-full bg-base-300"
+        data-testid="SectionOption-0"
+      >
+        <input
+          aria-label="Module name"
+          class="btn join-item disabled:cursor-not-allowed w-full rounded-field"
+          data-testid="Module"
+          id="Option name-Module name"
+          style="margin: 0px;"
+          type="checkbox"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

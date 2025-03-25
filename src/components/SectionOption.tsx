@@ -2,6 +2,8 @@ import { SectionOption as SectionOptionType } from "@/types";
 import Module from "./Module";
 import { useCoursesStore } from "@/providers/CoursesStoreProvider";
 
+export const TESTING_ID_PREFIX = "SectionOption-";
+
 interface Props {
   option: SectionOptionType;
   sectionTitle: string;
@@ -26,6 +28,7 @@ export default function SectionOption({
       className={`p-4 flex-1 rounded-box flex flex-col items-stretch gap-2 justify-center transition-colors join w-full ${
         isNeighborStarted ? "bg-base-300/60 cursor-not-allowed" : "bg-base-300"
       }`}
+      data-testid={`${TESTING_ID_PREFIX}${optionIndex}`}
     >
       {option.modules.map((module, index) => (
         <Module

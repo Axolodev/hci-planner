@@ -5,6 +5,8 @@ import { Section as SectionType } from "@/types";
 import SectionOption from "./SectionOption";
 import { useCoursesStore } from "@/providers/CoursesStoreProvider";
 
+export const INDICATOR_TESTING_ID = "section-indicator";
+
 interface Props {
   section: SectionType;
 }
@@ -21,6 +23,7 @@ export default function Section({ section }: Props) {
         className={`swap text-3xl indicator-item absolute cursor-default ${
           isCompleted ? "swap-active" : ""
         }`}
+        data-testid={INDICATOR_TESTING_ID}
       >
         <div className="swap-on">✅</div>
         <div className="swap-off"></div>

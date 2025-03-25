@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Module renders correctly and matches snapshot 1`] = `
+<div>
+  <input
+    class="btn join-item disabled:cursor-not-allowed w-full rounded-field"
+    data-testid="Module"
+    id="Option name-undefined"
+    style="margin: 0px;"
+    type="checkbox"
+  />
+</div>
+`;

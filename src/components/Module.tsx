@@ -2,6 +2,8 @@ import { useCoursesStore } from "@/providers/CoursesStoreProvider";
 import { Module as ModuleType } from "@/types";
 import * as React from "react";
 
+export const TESTING_ID = "Module";
+
 interface Props extends ModuleType {
   moduleIndex: number;
   optionName: string;
@@ -41,6 +43,7 @@ const Module: React.FunctionComponent<Props> = ({
       className={`btn join-item disabled:cursor-not-allowed w-full rounded-field`}
       aria-label={name}
       style={{ margin: 0 }}
+      data-testid="Module"
     />
   );
 };

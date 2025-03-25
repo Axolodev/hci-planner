@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SectionOption renders correctly and matches snapshot 1`] = `
+<div>
+  <div
+    class="p-4 flex-1 rounded-box flex flex-col items-stretch gap-2 justify-center transition-colors join w-full bg-base-300"
+  >
+    <input
+      aria-label="Module name"
+      class="btn join-item disabled:cursor-not-allowed w-full rounded-field"
+      data-testid="Module"
+      id="Option name-Module name"
+      style="margin: 0px;"
+      type="checkbox"
+    />
+  </div>
+</div>
+`;

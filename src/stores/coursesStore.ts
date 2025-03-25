@@ -1,4 +1,3 @@
-import plan from "@/data/plan";
 import { Plan } from "@/types";
 import { createStore } from "zustand/vanilla";
 import { modifyPath, path } from "ramda";
@@ -72,7 +71,7 @@ export const convertPlanToStatus = (plan: Plan) => {
   return sections;
 };
 
-export const initCounterStore = (): CoursesStateType => {
+export const initCounterStore = (plan: Plan): CoursesStateType => {
   return {
     ...defaultInitState,
     sections: convertPlanToStatus(plan),
