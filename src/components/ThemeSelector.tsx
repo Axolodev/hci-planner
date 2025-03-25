@@ -47,7 +47,7 @@ export default function ThemeSelector() {
             key={theme}
             data-theme={theme}
             data-set-theme={theme}
-            className="not-first:mt-1 rounded-box"
+            className="not-first:mt-1 rounded-field"
           >
             <input
               type="radio"
