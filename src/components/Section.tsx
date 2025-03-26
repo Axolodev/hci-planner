@@ -5,6 +5,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { Section as SectionType } from "@/types";
 import SectionOption from "./SectionOption";
 import { useCoursesStore } from "@/providers/CoursesStoreProvider";
+import { useIsClient } from "@/utils/useIsClient";
 
 export const INDICATOR_TESTING_ID = "section-indicator";
 
@@ -17,12 +18,13 @@ export default function Section({ section }: Props) {
     (state) => state
   );
   const isCompleted = isSectionCompleted(section.title);
+  const isClient = useIsClient();
 
   return (
     <div className="p-4 bg-base-200 rounded-box flex flex-col indicator w-full">
       <label
         className={`swap text-3xl indicator-item absolute cursor-default ${
-          isCompleted ? "swap-active" : ""
+          isClient && isCompleted ? "swap-active" : ""
         }`}
         data-testid={INDICATOR_TESTING_ID}
       >
@@ -30,7 +32,7 @@ export default function Section({ section }: Props) {
           <FaCheckCircle className="text-success" />
         </div>
         <div className="swap-off"></div>
-        {isCompleted && (
+        {isClient && isCompleted && (
           <ConfettiExplosion
             force={0.3}
             duration={2200}

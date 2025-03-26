@@ -1,6 +1,12 @@
-import { Plan } from "@/types";
 import { createStore } from "zustand/vanilla";
 import { modifyPath, path } from "ramda";
+import {
+  persist,
+  StateStorage,
+  createJSONStorage,
+  PersistOptions,
+} from "zustand/middleware";
+import { Plan } from "@/types";
 
 export const localStorageKey = "coursesStatus";
 
@@ -49,10 +55,45 @@ export type CoursesActionsType = {
   getIsPlanCompleted: () => boolean;
 };
 
+const getUrlSearch = () => {
+  return window.location.search.slice(1);
+};
+
+const persistentStorage: StateStorage = {
+  getItem: (key): string => {
+    // Check URL first
+    if (getUrlSearch()) {
+      const searchParams = new URLSearchParams(getUrlSearch());
+      const storedValue = searchParams.get(key);
+      return JSON.parse(storedValue as string);
+    } else {
+      // Otherwise, we should load from localstorage or alternative storage
+      return JSON.parse(localStorage.getItem(key) as string);
+    }
+  },
+  setItem: (key, newValue): void => {
+    const searchParams = new URLSearchParams(getUrlSearch());
+    searchParams.set(key, JSON.stringify(newValue));
+    window.history.replaceState(null, "", `?${searchParams.toString()}`);
+
+    localStorage.setItem(key, JSON.stringify(newValue));
+  },
+  removeItem: (key): void => {
+    const searchParams = new URLSearchParams(getUrlSearch());
+    searchParams.delete(key);
+    window.location.search = searchParams.toString();
+  },
+};
+
 export type CoursesStoreType = CoursesStateType & CoursesActionsType;
 
 export const defaultInitState: CoursesStateType = {
   sections: {},
+};
+
+const storageOptions: PersistOptions<CoursesStoreType> = {
+  name: localStorageKey,
+  storage: createJSONStorage<CoursesStoreType>(() => persistentStorage),
 };
 
 export const convertPlanToStatus = (plan: Plan) => {
@@ -97,74 +138,79 @@ function isPlanCompleted(sections: Record<string, SectionType>) {
 export const createCoursesStore = (
   initState: CoursesStateType = defaultInitState
 ) => {
-  return createStore<CoursesStoreType>((set, get) => ({
-    ...initState,
-    reset: () => {
-      set(initState);
-    },
-    setModuleStatus: (sectionName, optionIndex, moduleIndex, status) => {
-      set((state) => {
-        const newState = {
-          ...state,
-          sections: modifyPath(
-            [
-              sectionName,
-              "options",
-              optionIndex,
-              "modules",
-              moduleIndex,
-              "isCompleted",
-            ],
-            () => status,
-            state.sections
-          ),
-        };
-        return newState;
-      });
-    },
-    getModuleStatus: (sectionName, optionIndex, moduleIndex) => {
-      return (
-        path(
-          [
-            sectionName,
-            "options",
-            optionIndex,
-            "modules",
-            moduleIndex,
-            "isCompleted",
-          ],
-          get().sections
-        ) || false
-      );
-    },
-    getIsSectionStarted(sectionName) {
-      const currentSection = get().sections[sectionName];
-      if (!currentSection) {
-        return false;
-      }
-      return isSectionStarted(currentSection);
-    },
-    getIsNeighbourSectionOptionStarted(sectionName, optionIndex) {
-      const currentSection = get().sections[sectionName];
-      if (!currentSection) {
-        return false;
-      }
-      return currentSection.options.some((option, index) => {
-        if (index === optionIndex) {
-          return false;
-        }
-        return isSectionOptionStarted(option);
-      });
-    },
-    getIsSectionCompleted(sectionName) {
-      const currentSection = get().sections[sectionName];
-      if (!currentSection) {
-        return false;
-      }
-      return currentSection.options.some(isSectionOptionCompleted);
-    },
-    getIsPlanCompleted: () => {
-      return isPlanCompleted(get().sections);
-    },
-  }));
+  return createStore(
+    persist<CoursesStoreType>(
+      (set, get) => ({
+        ...initState,
+        reset: () => {
+          set(initState);
+        },
+        setModuleStatus: (sectionName, optionIndex, moduleIndex, status) => {
+          set((state) => {
+            const newState = {
+              ...state,
+              sections: modifyPath(
+                [
+                  sectionName,
+                  "options",
+                  optionIndex,
+                  "modules",
+                  moduleIndex,
+                  "isCompleted",
+                ],
+                () => status,
+                state.sections
+              ),
+            };
+            return newState;
+          });
+        },
+        getModuleStatus: (sectionName, optionIndex, moduleIndex) => {
+          return (
+            path(
+              [
+                sectionName,
+                "options",
+                optionIndex,
+                "modules",
+                moduleIndex,
+                "isCompleted",
+              ],
+              get().sections
+            ) || false
+          );
+        },
+        getIsSectionStarted(sectionName) {
+          const currentSection = get().sections[sectionName];
+          if (!currentSection) {
+            return false;
+          }
+          return isSectionStarted(currentSection);
+        },
+        getIsNeighbourSectionOptionStarted(sectionName, optionIndex) {
+          const currentSection = get().sections[sectionName];
+          if (!currentSection) {
+            return false;
+          }
+          return currentSection.options.some((option, index) => {
+            if (index === optionIndex) {
+              return false;
+            }
+            return isSectionOptionStarted(option);
+          });
+        },
+        getIsSectionCompleted(sectionName) {
+          const currentSection = get().sections[sectionName];
+          if (!currentSection) {
+            return false;
+          }
+          return currentSection.options.some(isSectionOptionCompleted);
+        },
+        getIsPlanCompleted: () => {
+          return isPlanCompleted(get().sections);
+        },
+      }),
+      storageOptions
+    )
+  );
 };
