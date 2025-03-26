@@ -1,5 +1,4 @@
 import { createStore } from "zustand/vanilla";
-import { modifyPath, path } from "ramda";
 import {
   persist,
   StateStorage,
@@ -14,16 +13,8 @@ type ModuleType = {
   isCompleted: boolean;
 };
 
-type SectionOption = {
-  modules: ModuleType[];
-};
-
-type SectionType = {
-  options: SectionOption[];
-};
-
 type CoursesStateType = {
-  sections: Record<string, SectionType>;
+  sections: Record<string, ModuleType[][]>;
 };
 
 export type CoursesActionsType = {
@@ -97,43 +88,23 @@ const storageOptions: PersistOptions<CoursesStoreType> = {
 };
 
 export const convertPlanToStatus = (plan: Plan) => {
-  const sections: Record<string, SectionType> = {};
+  const sections: Record<string, ModuleType[][]> = {};
   plan.sections.forEach((section) => {
-    const options: SectionOption[] = section.options.map((option) => {
-      const modules: ModuleType[] = option.modules.map(() => ({
+    const options: ModuleType[][] = section.options.map((option) => {
+      return option.modules.map(() => ({
         isCompleted: false,
       }));
-      return {
-        modules,
-      };
     });
-    sections[section.title] = { options };
+    sections[section.title] = options;
   });
   return sections;
 };
 
 export const initCounterStore = (plan: Plan): CoursesStateType => {
   return {
-    ...defaultInitState,
     sections: convertPlanToStatus(plan),
   };
 };
-
-function isSectionOptionStarted(sectionOption: SectionOption) {
-  return sectionOption.modules.some((module) => module.isCompleted);
-}
-
-function isSectionStarted(section: SectionType) {
-  return section.options.some(isSectionOptionStarted);
-}
-
-function isSectionOptionCompleted(sectionOption: SectionOption) {
-  return sectionOption.modules.every((module) => module.isCompleted);
-}
-
-function isPlanCompleted(sections: Record<string, SectionType>) {
-  return Object.values(sections).every((section) => isSectionStarted(section));
-}
 
 export const createCoursesStore = (
   initState: CoursesStateType = defaultInitState
@@ -149,65 +120,59 @@ export const createCoursesStore = (
           set((state) => {
             const newState = {
               ...state,
-              sections: modifyPath(
-                [
-                  sectionName,
-                  "options",
-                  optionIndex,
-                  "modules",
-                  moduleIndex,
-                  "isCompleted",
-                ],
-                () => status,
-                state.sections
-              ),
+              sections: {
+                ...state.sections,
+                [sectionName]: state.sections[sectionName].map(
+                  (option, optIdx) =>
+                    optIdx === optionIndex
+                      ? option.map((module, modIdx) =>
+                          modIdx === moduleIndex
+                            ? { ...module, isCompleted: status }
+                            : module
+                        )
+                      : option
+                ),
+              },
             };
             return newState;
           });
         },
         getModuleStatus: (sectionName, optionIndex, moduleIndex) => {
           return (
-            path(
-              [
-                sectionName,
-                "options",
-                optionIndex,
-                "modules",
-                moduleIndex,
-                "isCompleted",
-              ],
-              get().sections
-            ) || false
+            get().sections[sectionName]?.[optionIndex]?.[moduleIndex]
+              ?.isCompleted || false
           );
         },
-        getIsSectionStarted(sectionName) {
-          const currentSection = get().sections[sectionName];
-          if (!currentSection) {
-            return false;
-          }
-          return isSectionStarted(currentSection);
+        getIsSectionStarted: (sectionName) => {
+          const section = get().sections[sectionName];
+          if (!section) return false;
+          return section.some((option) =>
+            option.some((module) => module.isCompleted)
+          );
         },
-        getIsNeighbourSectionOptionStarted(sectionName, optionIndex) {
-          const currentSection = get().sections[sectionName];
-          if (!currentSection) {
-            return false;
-          }
-          return currentSection.options.some((option, index) => {
-            if (index === optionIndex) {
-              return false;
-            }
-            return isSectionOptionStarted(option);
-          });
+        getIsNeighbourSectionOptionStarted: (sectionName, optionIndex) => {
+          const section = get().sections[sectionName];
+          if (!section) return false;
+          return section.some((option, idx) =>
+            idx !== optionIndex
+              ? option.some((module) => module.isCompleted)
+              : false
+          );
         },
-        getIsSectionCompleted(sectionName) {
-          const currentSection = get().sections[sectionName];
-          if (!currentSection) {
-            return false;
-          }
-          return currentSection.options.some(isSectionOptionCompleted);
+        getIsSectionCompleted: (sectionName) => {
+          const section = get().sections[sectionName];
+          if (!section) return false;
+
+          return section.some((option) =>
+            option.every((module) => module.isCompleted)
+          );
         },
         getIsPlanCompleted: () => {
-          return isPlanCompleted(get().sections);
+          return Object.values(get().sections).every((section) =>
+            section.every((option) =>
+              option.every((module) => module.isCompleted)
+            )
+          );
         },
       }),
       storageOptions

@@ -43,7 +43,7 @@ const Module: React.FunctionComponent<Props> = ({
       className={`btn join-item disabled:cursor-not-allowed w-full rounded-field min-h-[40px] h-auto`}
       aria-label={name}
       style={{ margin: 0 }}
-      data-testid="Module"
+      data-testid={TESTING_ID}
     />
   );
 };
