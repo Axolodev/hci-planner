@@ -17,7 +17,7 @@ export default function Footer() {
         <div>
           Created with ❤️ by{" "}
           <a
-            href="https://github.com/Axolodev"
+            href="https://robruizr.dev/"
             className="font-bold link-primary"
             rel="noopener noreferrer"
             target="_blank"
