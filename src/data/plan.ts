@@ -51,7 +51,7 @@ const plan: Plan = {
       options: [
         {
           name: "Research only",
-          creditsInfo: "3 Credits each",
+          creditsInfo: "6 Credits each",
           modules: [
             { name: "Current Research 1" },
             { name: "Current Research 2" },
@@ -60,7 +60,7 @@ const plan: Plan = {
         },
         {
           name: "Research and Internship",
-          creditsInfo: "3 Credits each",
+          creditsInfo: "6 Credits each",
           modules: [
             { name: "Current Research 1" },
             { name: "Current Research 2" },
