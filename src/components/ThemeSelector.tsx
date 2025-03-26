@@ -26,7 +26,7 @@ const daisyUiThemes = [
 export default function ThemeSelector() {
   return (
     <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn">
+      <button className="btn">
         Choose a Theme
         <svg
           width="12px"
@@ -37,9 +37,9 @@ export default function ThemeSelector() {
         >
           <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z" />
         </svg>
-      </div>
+      </button>
       <ul
-        tabIndex={0}
+        tabIndex={-1}
         className="dropdown-content menu bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl"
       >
         {daisyUiThemes.map((theme) => (
