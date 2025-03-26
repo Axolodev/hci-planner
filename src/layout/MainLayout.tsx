@@ -1,6 +1,5 @@
 import * as React from "react";
 import Head from "next/head";
-import { Analytics } from "@vercel/analytics/react";
 
 import Footer from "@/components/Footer";
 import ThemeSelector from "@/components/ThemeSelector";
@@ -27,7 +26,6 @@ const MainLayout = ({ children }: Props) => {
         {children}
       </main>
       <Footer />
-      <Analytics />
     </div>
   );
 };
